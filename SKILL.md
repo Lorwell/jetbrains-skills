@@ -77,7 +77,7 @@ jetbrains-ide: idea
 
 ## 场景零：项目初始化（`init`）
 
-将当前项目配置为 JetBrains IDE 协作模式：检测可用 IDE → 写入 `jetbrains-ide:` 声明 → 追加协作规则（含默认加载 skill 声明）。后续会话中 skill 自动加载并识别 IDE 类型，无需重复询问。
+将当前项目配置为 JetBrains IDE 协作模式：检测可用 IDE → 写入 `jetbrains-ide:` 声明 → 追加协作规则，引导智能体在每次会话中主动调用 `jetbrains` skill。后续会话中智能体根据声明自动识别 IDE 类型，无需重复询问。
 
 > 触发方式：用户说"初始化 jetbrains"、"jetbrains init"、"配置 jetbrains 项目"等。详细执行流程见 [INIT 参考](references/INIT.md)。
 

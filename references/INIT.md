@@ -1,6 +1,6 @@
 # JetBrains IDE 项目初始化参考（init）
 
-将当前项目配置为 JetBrains IDE 协作模式：写入 IDE 声明 → 写入优先使用规则（含默认加载 `jetbrains` skill 声明）。后续会话中 skill 自动加载并识别 IDE 类型，无需重复询问。
+将当前项目配置为 JetBrains IDE 协作模式：写入 IDE 声明 → 写入优先使用规则，引导智能体在每次会话中主动调用 `jetbrains` skill 并识别 IDE 类型，无需重复询问。
 
 ## 触发方式
 
@@ -33,7 +33,7 @@ jetbrains-ide: <idea|webStorm|androidStudio>
 
 当进行代码搜索、符号查找、编译检查、重构等操作时，优先使用 JetBrains IDE MCP 工具，因为 IDE 具有完整的项目索引和语义理解能力（PSI 树、检查引擎），比纯文本工具更精准高效。仅在 JetBrains MCP 服务器未连接或对应功能不支持时，退回到通用文件工具。
 
-每次会话需默认加载 `jetbrains` skill，以便自动识别 IDE 类型并注入上述协作规则。
+在每次会话中主动调用 `jetbrains` skill，优先使用 IDE MCP 工具进行代码操作。
 ```
 
 ## 写入注意事项

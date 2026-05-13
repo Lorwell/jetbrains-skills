@@ -34,9 +34,10 @@ npx skills add shaco/jetbrains-skills
 
 手动配置：
 
-1. 在项目 `CLAUDE.md` 中声明 IDE 类型：`jetbrains-ide: idea`
-2. 确保对应 IDE 的 MCP 插件已启动并连接
-3. 在 Claude Code 中正常使用，skill 自动匹配对应 IDE 的工具
+1. 在 JetBrains IDE 中自行配置 MCP 工具连接，参考官方文档：[JetBrains MCP Server](https://www.jetbrains.com/zh-cn/help/idea/mcp-server.html)
+2. 在项目 `CLAUDE.md` 中声明 IDE 类型：`jetbrains-ide: idea`
+3. 确保对应 IDE 的 MCP 插件已启动并连接
+4. 在 Claude Code 中正常使用，skill 自动匹配对应 IDE 的工具
 
 ## 功能
 
