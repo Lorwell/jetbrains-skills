@@ -33,22 +33,22 @@ user-invocable: true
 
 每次使用本 skill 时必须先执行以下流程确定 IDE 类型：
 
-**第一步**：读取 `.claude/rules/jetbrains-ide.md`，查找 frontmatter 下方的 `jetbrains-ide:` 声明：
+**第一步**：读取 `CLAUDE.md`，查找 `jetbrains-ide:` 声明：
 
 ```markdown
-# .claude/rules/jetbrains-ide.md 中的声明示例
+# CLAUDE.md 中的声明示例
 
 jetbrains-ide: idea
 ```
 
 若找到则直接使用对应的 MCP 服务器名，跳过第二步。
 
-**第二步**：若未找到该规则文件或其中没有 `jetbrains-ide:` 声明，调用「向用户提问」类工具，让用户选择当前项目使用的 IDE：
+**第二步**：若未找到 `jetbrains-ide:` 声明，调用「向用户提问」类工具，让用户选择当前项目使用的 IDE：
 
 - **问题**：当前项目使用的是哪个 JetBrains IDE？
 - **选项**：IntelliJ IDEA（推荐）、WebStorm、Android Studio
 
-用户选择后，按 [INIT 参考](references/INIT.md) 的规范创建/更新 `.claude/rules/jetbrains-ide.md`，后续无需再次询问。
+用户选择后，按 [INIT 参考](references/INIT.md) 的规范更新 `CLAUDE.md`，后续无需再次询问。
 
 > 确定 IDE 后，后续所有 MCP 工具调用均使用对应的服务器名前缀。若对应的 MCP 服务器未连接，则退回到通用文件工具。
 
@@ -105,9 +105,7 @@ subagent_type: "jetbrains-general"       # 替代 "general-purpose"
 
 ## 场景零：项目初始化（`init`）
 
-将当前项目配置为 JetBrains IDE 协作模式：检测可用 IDE → 创建 `.claude/rules/jetbrains-ide.md` 规则文件（含
-`jetbrains-ide:` 声明和协作规则），引导智能体在每次会话中主动调用 `jetbrains` skill。后续会话中智能体根据规则文件自动识别
-IDE 类型，无需重复询问。
+将当前项目配置为 JetBrains IDE 协作模式：检测可用 IDE → 在 `CLAUDE.md` 中写入 `jetbrains-ide:` 声明和协作规则，引导智能体在每次会话中主动调用 `jetbrains` skill。后续会话中智能体根据 `CLAUDE.md` 中的声明自动识别 IDE 类型，无需重复询问。
 
 > 触发方式：用户说"初始化 jetbrains"、"jetbrains init"、"配置 jetbrains 项目"
 > 等。详细执行流程见 [INIT 参考](references/INIT.md)。
