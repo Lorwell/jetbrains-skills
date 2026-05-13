@@ -2,7 +2,8 @@
 name: jetbrains
 description: 使用 JetBrains IDE MCP 工具进行代码搜索、编译检查、符号分析、重构等全栈协作 — 充分利用 IDE 的语义理解能力（索引、PSI、检查引擎）替代命令行操作
 when_to_use: |
-  仅当上下文中至少有一个 JetBrains IDE MCP 服务器（idea/webStorm/androidStudio）处于连接状态时启用。若未连接则忽略本 skill。
+  当用户要求"初始化 jetbrains"/"配置 jetbrains 项目"时，执行 init 流程（无需 IDE MCP 连接也可运行）。
+  其余场景仅当上下文中至少有一个 JetBrains IDE MCP 服务器（idea/webStorm/androidStudio）处于连接状态时启用。若未连接则忽略本 skill。
   - 需要搜索代码（按文本、正则、符号名、文件名、glob 模式）
   - 需要排查编译问题（检查文件错误/警告、触发构建）
   - 需要获取方法/类/字段的类型签名和文档（Quick Documentation）
@@ -73,6 +74,12 @@ jetbrains-ide: idea
 1. **始终传递 `projectPath`** — 所有工具调用必须包含当前工作目录作为 `projectPath`
 2. **优先用 IDE 工具而非命令行** — `search_text` 优于 `grep`，`find_files_by_name_keyword` 优于 `find`，`get_file_problems` 优于 `gradle build`
 3. **用 `open_file_in_editor` 同步视角** — 关键位置打开文件让开发者在 IDE 中看到
+
+## 场景零：项目初始化（`init`）
+
+将当前项目配置为 JetBrains IDE 协作模式：检测可用 IDE → 写入 `jetbrains-ide:` 声明 → 追加协作规则（含默认加载说明）→ 配置 `enabledSkills`。后续会话中 skill 自动加载并识别 IDE 类型，无需重复询问。
+
+> 触发方式：用户说"初始化 jetbrains"、"jetbrains init"、"配置 jetbrains 项目"等。详细执行流程见 [INIT 参考](references/INIT.md)。
 
 ## 场景一：代码搜索与定位
 
@@ -378,4 +385,5 @@ jetbrains-ide: idea
 
 ## 参考
 
+- [INIT 参考](references/INIT.md) — 项目初始化（init）的详细执行流程与写入规则
 - [编辑参考](references/EDITING.md) — 代码搜索、分析、编辑、数据库、项目信息等工具的详细参数与示例

@@ -20,6 +20,20 @@ npx skills add shaco/jetbrains-skills
 
 ## 使用
 
+**首次使用推荐先初始化项目**，自动检测 IDE 并写入配置：
+
+```
+/jetbrains:init
+```
+
+或直接说"初始化 jetbrains"、"配置 jetbrains 项目"。init 会自动完成：
+
+1. 检测当前连接的 JetBrains IDE MCP 服务器
+2. 在 `CLAUDE.md` 中写入 `jetbrains-ide: <值>` 声明
+3. 写入「优先使用 JetBrains IDE MCP 工具」的协作规则
+
+手动配置：
+
 1. 在项目 `CLAUDE.md` 中声明 IDE 类型：`jetbrains-ide: idea`
 2. 确保对应 IDE 的 MCP 插件已启动并连接
 3. 在 Claude Code 中正常使用，skill 自动匹配对应 IDE 的工具
