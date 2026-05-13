@@ -1,17 +1,13 @@
 ---
 name: jetbrains
-description: 使用 JetBrains IDE MCP 工具进行代码搜索、编译检查、符号分析、重构等全栈协作 — 充分利用 IDE 的语义理解能力（索引、PSI、检查引擎）替代命令行操作
-when_to_use: |
-  当用户要求"初始化 jetbrains"/"配置 jetbrains 项目"时，执行 init 流程（无需 IDE MCP 连接也可运行）。
-  其余场景仅当上下文中至少有一个 JetBrains IDE MCP 服务器（idea/webStorm/androidStudio）处于连接状态时启用。若未连接则忽略本 skill。
-  - 需要搜索代码（按文本、正则、符号名、文件名、glob 模式）
-  - 需要排查编译问题（检查文件错误/警告、触发构建）
-  - 需要获取方法/类/字段的类型签名和文档（Quick Documentation）
-  - 需要重构代码（重命名、格式化）
-  - 需要在 IDE 中打开文件与用户同步视角
-  - 需要浏览项目结构（目录树、模块、依赖）
-  - 需要执行 SQL 查询或浏览数据库结构
+description: |
+  使用 JetBrains IDE MCP 工具进行代码搜索、编译检查、符号分析、重构等全栈协作，利用 IDE 的语义理解能力（索引、PSI、检查引擎）替代命令行操作。
+  仅当上下文中至少有一个 JetBrains IDE MCP 服务器（idea/webStorm/androidStudio）处于连接状态时启用，若未连接则忽略本 skill。
+  当用户要求"初始化 jetbrains"/"配置 jetbrains 项目"时执行 init 流程（无需 IDE MCP 连接也可运行）。
+  触发场景：搜索代码（文本、正则、符号名、文件名、glob）、排查编译问题、理解代码（符号文档、PSI 树）、重构代码（重命名、格式化）、浏览项目结构、执行 SQL 查询。
+user-invocable: true
 ---
+
 
 # JetBrains IDE 协作
 
@@ -74,6 +70,34 @@ jetbrains-ide: idea
 1. **始终传递 `projectPath`** — 所有工具调用必须包含当前工作目录作为 `projectPath`
 2. **优先用 IDE 工具而非命令行** — `search_text` 优于 `grep`，`find_files_by_name_keyword` 优于 `find`，`get_file_problems` 优于 `gradle build`
 3. **用 `open_file_in_editor` 同步视角** — 关键位置打开文件让开发者在 IDE 中看到
+
+## 与子智能体（Sub-agent）协作
+
+Claude Code 的子智能体（Explore、general-purpose 等）**不会自动继承**主智能体的 skill，需显式配置才能让子智能体也使用 JetBrains IDE MCP 工具。
+
+### 方式一：在 prompt 中显式传递（即时生效）
+
+生成子智能体时，在 prompt 中包含 JetBrains IDE MCP 工具的使用指令：
+
+```
+使用 JetBrains IDE MCP 工具（mcp__idea__、mcp__webStorm__、mcp__androidStudio__）进行代码搜索和分析。所有工具调用必须传递 projectPath 参数。优先用 search_symbol/search_text 而非 grep/find，用 get_file_problems 而非 gradle build。
+```
+
+### 方式二：安装专用 agent 配置（持久生效）
+
+将本 skill 包中 `agents/` 目录下的 agent 配置文件复制到 `~/.claude/agents/`（用户级，所有项目生效）或 `<project>/.claude/agents/`（项目级），这些 agent 已预配置 `skills: [jetbrains]`，启动时自动加载本 skill。
+
+| Agent 文件 | 类型 | 用途 |
+|-----------|------|------|
+| `agents/jetbrains-code-search.md` | Explore | 代码搜索与定位，使用 IDE 索引 |
+| `agents/jetbrains-general.md` | general-purpose | 复杂任务（分析、重构等），全工具访问 |
+
+安装后在 Agent 工具调用中使用自定义 agent 类型：
+
+```text
+subagent_type: "jetbrains-code-search"   # 替代 "Explore"
+subagent_type: "jetbrains-general"       # 替代 "general-purpose"
+```
 
 ## 场景零：项目初始化（`init`）
 

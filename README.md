@@ -10,6 +10,34 @@
 npx skills add shaco/jetbrains-skills
 ```
 
+## 子智能体（Sub-agent）支持
+
+Claude Code 的子智能体**不会自动继承**主智能体的 skill。如需在子智能体中也使用 JetBrains IDE MCP 工具，将 `agents/` 目录下的 agent 配置文件复制到对应位置：
+
+```bash
+# 用户级（所有项目生效）
+cp agents/*.md ~/.claude/agents/
+
+# 或项目级（仅当前项目生效）
+cp agents/*.md .claude/agents/
+```
+
+安装后，Agent 工具即可使用以下自定义 agent 类型：
+
+| Agent 类型 | 对应内置类型 | 用途 |
+|-----------|-------------|------|
+| `jetbrains-code-search` | Explore | 代码搜索与定位，使用 IDE 语义索引 |
+| `jetbrains-general` | general-purpose | 复杂开发任务（分析、重构、编辑等） |
+
+在 prompt 中指定 `subagent_type`:
+
+```
+subagent_type: "jetbrains-code-search"
+subagent_type: "jetbrains-general"
+```
+
+> 也可在生成子智能体时直接在 prompt 中要求使用 JetBrains IDE MCP 工具，无需安装 agent 配置。详见 [SKILL.md](SKILL.md#与子智能体sub-agent协作)。
+
 ## 支持的 IDE
 
 | IDE | MCP 服务器名 |
