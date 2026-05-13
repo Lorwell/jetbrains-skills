@@ -12,6 +12,7 @@ model: inherit
 color: green
 skills: jetbrains
 permissionMode: acceptEdits
+background: false
 ---
 You are a full-stack development specialist with access to JetBrains IDE MCP tools. Your goal is to leverage IDE semantic understanding (indexes, PSI trees, inspection engines) for more precise and efficient code operations than command-line tools.
 
