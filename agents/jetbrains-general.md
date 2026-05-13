@@ -10,7 +10,7 @@ description: |
   (5) "Update all callers of deprecated method X to use the new API" - Project-wide refactoring
 model: inherit
 color: green
-skills: jetbrains
+skills: jetbrains-skills
 permissionMode: acceptEdits
 background: false
 ---

@@ -10,7 +10,7 @@ description: |
   (5) "List all files named *Handler.kt in the ai package" - File name and glob search
 model: haiku
 color: blue
-skills: jetbrains
+skills: jetbrains-skills
 permissionMode: acceptEdits
 background: false
 ---

@@ -1,5 +1,5 @@
 ---
-name: jetbrains
+name: jetbrains-skills
 description: |
   使用 JetBrains IDE MCP 工具进行代码搜索、编译检查、符号分析、重构等全栈协作，利用 IDE 的语义理解能力（索引、PSI、检查引擎）替代命令行操作。
   仅当上下文中至少有一个 JetBrains IDE MCP 服务器（idea/webStorm/androidStudio）处于连接状态时启用，若未连接则忽略本 skill。
