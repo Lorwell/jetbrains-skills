@@ -1,6 +1,6 @@
 # JetBrains IDE 项目初始化参考（init）
 
-将当前项目配置为 JetBrains IDE 协作模式：写入 IDE 声明 → 写入优先使用规则（含默认加载说明） → 配置 `enabledSkills`。后续会话中 skill 自动加载并识别 IDE 类型，无需重复询问。
+将当前项目配置为 JetBrains IDE 协作模式：写入 IDE 声明 → 写入优先使用规则（含默认加载 `jetbrains` skill 声明）。后续会话中 skill 自动加载并识别 IDE 类型，无需重复询问。
 
 ## 触发方式
 
@@ -26,33 +26,20 @@ jetbrains-ide: <idea|webStorm|androidStudio>
 
 ### 第三步 — 写入协作规则
 
-在 `CLAUDE.md` 中追加优先使用 JetBrains IDE MCP 的协作规则，并确保 `jetbrains` skill 默认加载（若已有则跳过）：
+在 `CLAUDE.md` 中追加优先使用 JetBrains IDE MCP 的协作规则，并声明 `jetbrains` skill 应默认加载（若已有则跳过）：
 
 ```markdown
 ## JetBrains IDE MCP 协作
 
 当进行代码搜索、符号查找、编译检查、重构等操作时，优先使用 JetBrains IDE MCP 工具，因为 IDE 具有完整的项目索引和语义理解能力（PSI 树、检查引擎），比纯文本工具更精准高效。仅在 JetBrains MCP 服务器未连接或对应功能不支持时，退回到通用文件工具。
 
-> 本规则由 `jetbrains` skill 提供。该 skill 应在每次会话中默认加载（通过项目 `.claude/settings.json` 的 `enabledSkills` 配置），以便自动识别 IDE 类型并注入协作规则。
+每次会话需默认加载 `jetbrains` skill，以便自动识别 IDE 类型并注入上述协作规则。
 ```
-
-### 第四步 — 配置默认加载 skill
-
-在项目 `.claude/settings.json` 中确保 `jetbrains` skill 在每次会话中默认加载：
-
-```json
-{
-  "enabledSkills": ["jetbrains"]
-}
-```
-
-若 `.claude/settings.json` 不存在则新建；若已有其他配置则合并 `enabledSkills` 数组。
 
 ## 写入注意事项
 
 - 若 `CLAUDE.md` 中已有 `jetbrains-ide:` 声明，检查当前连接状态是否匹配，不匹配则更新为当前连接的 IDE
 - 若已有"JetBrains IDE MCP 协作"相关规则则不重复写入，避免内容冗余
-- `.claude/settings.json` 中 `enabledSkills` 若已包含 `"jetbrains"` 则不重复添加
 - 使用 Edit 工具精确追加，保持现有内容不变
 
 ## 映射关系
